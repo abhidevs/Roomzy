@@ -9,3 +9,74 @@ datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id              String    @id @default(auto()) @map("_id") @db.ObjectId
+  name            String?
+  email           String?   @unique
+  emailVerifiedAt DateTime?
+  image           String?
+  hashedPassword  String?
+  createdAt       DateTime  @default(now())
+  lastUpdatedAt   DateTime  @updatedAt
+  favouriteIds    String[]  @db.ObjectId
+
+  // Relationships
+  accounts     Account[]
+  listings     Listing[]
+  reservations Reservation[]
+}
+
+model Account {
+  id                String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String  @db.ObjectId
+  type              String
+  provider          String
+  providerAccountId String
+  accessToken       String  @db.String
+  refreshToken      String  @db.String
+  tokenExpiresAt    Int?
+  tokenType         String?
+  scope             String?
+  idToken           String? @db.String
+  sessionState      String?
+
+  // Relationships
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Constraints
+  @@unique([provider, providerAccountId])
+}
+
+model Listing {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  title         String
+  description   String
+  imageSrc      String
+  createdAt     DateTime @default(now())
+  category      String
+  roomCount     Int
+  bathroomCount Int
+  guestCount    Int
+  location      String
+  price         Int
+  createdById   String   @db.ObjectId
+
+  // Relationships
+  createdBy    User          @relation(fields: [createdById], references: [id], onDelete: Cascade)
+  reservations Reservation[]
+}
+
+model Reservation {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  createdById String   @db.ObjectId
+  listingId   String   @db.ObjectId
+  startDate   DateTime
+  endDate     DateTime
+  totalPrice  Int
+  createdAt   DateTime @default(now())
+
+  // Relationships
+  createdBy User    @relation(fields: [createdById], references: [id], onDelete: Cascade)
+  listing   Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
+}
