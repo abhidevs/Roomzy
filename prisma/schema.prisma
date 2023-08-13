@@ -11,15 +11,15 @@ datasource db {
 }
 
 model User {
-  id              String    @id @default(auto()) @map("_id") @db.ObjectId
-  name            String?
-  email           String?   @unique
-  emailVerifiedAt DateTime?
-  image           String?
-  hashedPassword  String?
-  createdAt       DateTime  @default(now())
-  lastUpdatedAt   DateTime  @updatedAt
-  favouriteIds    String[]  @db.ObjectId
+  id             String    @id @default(auto()) @map("_id") @db.ObjectId
+  name           String?
+  email          String?   @unique
+  emailVerified  DateTime?
+  image          String?
+  hashedPassword String?
+  createdAt      DateTime  @default(now())
+  lastUpdatedAt  DateTime  @updatedAt
+  favouriteIds   String[]  @db.ObjectId
 
   // Relationships
   accounts     Account[]
@@ -33,13 +33,13 @@ model Account {
   type              String
   provider          String
   providerAccountId String
-  accessToken       String  @db.String
-  refreshToken      String  @db.String
-  tokenExpiresAt    Int?
-  tokenType         String?
+  access_token      String? @db.String
+  refresh_token     String? @db.String
+  expires_at        Int?
+  token_type        String?
   scope             String?
-  idToken           String? @db.String
-  sessionState      String?
+  id_token          String? @db.String
+  session_state     String?
 
   // Relationships
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
