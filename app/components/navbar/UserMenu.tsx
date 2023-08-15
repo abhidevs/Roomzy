@@ -8,6 +8,7 @@ import Avatar from "../Avatar";
 import MenuItem from "./MenuItem";
 import useRegisterModal from "@/app/hooks/useRegisterModal";
 import useLoginModal from "@/app/hooks/useLoginModal";
+import useRentModal from "@/app/hooks/useRentModal";
 import { User } from "@prisma/client";
 
 interface UserMenuProps {
@@ -16,18 +17,30 @@ interface UserMenuProps {
 
 const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
     const [isOpen, setIsOpen] = useState(false);
+
     const registerModal = useRegisterModal();
     const loginModal = useLoginModal();
+    const rentModal = useRentModal();
 
     const toggleOpen = useCallback(() => {
         setIsOpen((value) => !value);
     }, [isOpen]);
 
+    const putYourHomeOnRent = useCallback(() => {
+        // Show login modal if the user is not loggen in
+        if (!currentUser) {
+            return loginModal.onOpen();
+        }
+
+        // Open rent modal
+        rentModal.onOpen();
+    }, [currentUser, loginModal, rentModal]);
+
     return (
         <div className="relative">
             <div className="flex flex-row items-center gap-3">
                 <div
-                    onClick={() => {}}
+                    onClick={putYourHomeOnRent}
                     className="hidden md:block text-sm font-semibold py-3 px-4 rounded-full hover:bg-neutral-100 transition cursor-pointer"
                 >
                     Airbnb my home
@@ -61,7 +74,7 @@ const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
                                     label="My properties"
                                 />
                                 <MenuItem
-                                    onClick={() => {}}
+                                    onClick={putYourHomeOnRent}
                                     label="Airbnb my home"
                                 />
                                 <hr />
