@@ -12,11 +12,14 @@ import Modal from "./Modal";
 import Heading from "../Heading";
 import Input from "../inputs/Input";
 import Button from "../buttons/Button";
+import useLoginModal from "@/app/hooks/useLoginModal";
 import useRegisterModal from "@/app/hooks/useRegisterModal";
 
 const RegisterModal = () => {
     const [isLoading, setIsLoading] = useState(false);
+
     const registerModal = useRegisterModal();
+    const loginModal = useLoginModal();
 
     const {
         register,
@@ -29,6 +32,11 @@ const RegisterModal = () => {
             password: "",
         },
     });
+
+    const switchToLoginModal = useCallback(() => {
+        registerModal.onClose();
+        loginModal.onOpen();
+    }, [loginModal, registerModal]);
 
     const onSubmit: SubmitHandler<FieldValues> = (data) => {
         setIsLoading(true);
@@ -101,7 +109,7 @@ const RegisterModal = () => {
                 <div className="flex flex-row items-center justify-center gap-2">
                     <div>Already have an account?</div>
                     <div
-                        onClick={registerModal.onClose}
+                        onClick={switchToLoginModal}
                         className="text-neutral-800 cursor-pointer hover:underline"
                     >
                         Sign In

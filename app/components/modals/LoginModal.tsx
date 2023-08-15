@@ -34,6 +34,11 @@ const LoginModal = () => {
         },
     });
 
+    const switchToRegisterModal = useCallback(() => {
+        loginModal.onClose();
+        registerModal.onOpen();
+    }, [loginModal, registerModal]);
+
     const onSubmit: SubmitHandler<FieldValues> = (data) => {
         setIsLoading(true);
 
@@ -98,7 +103,7 @@ const LoginModal = () => {
                 <div className="flex flex-row items-center justify-center gap-2">
                     <div>Don't have an account?</div>
                     <div
-                        onClick={loginModal.onClose}
+                        onClick={switchToRegisterModal}
                         className="text-neutral-800 cursor-pointer hover:underline"
                     >
                         Sign Up
