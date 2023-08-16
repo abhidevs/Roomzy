@@ -1,12 +1,14 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { FieldValues, useForm } from "react-hook-form";
+
 import Modal from "./Modal";
 import useRentModal from "@/app/hooks/useRentModal";
 import Heading from "../Heading";
 import categories from "@/app/constants/categories";
 import CategoryInput from "../inputs/CategoryInput";
-import { FieldValues, useForm } from "react-hook-form";
+import CountrySelect from "../inputs/CountrySelect";
 
 enum STEPS {
     CATEGORY = 0,
@@ -43,6 +45,7 @@ const RentModal = () => {
     });
 
     const selectedCategory = watch("category");
+    const selectedLocation = watch("location");
 
     const setCustomValue = (id: string, value: any) => {
         setValue(id, value, {
@@ -53,11 +56,11 @@ const RentModal = () => {
     };
 
     const onBack = () => {
-        setCurrentStep((value) => Math.min(value - 1, STEPS.CATEGORY));
+        setCurrentStep((value) => Math.max(value - 1, STEPS.CATEGORY));
     };
 
     const onNext = () => {
-        setCurrentStep((value) => Math.max(value + 1, STEPS.PRICE));
+        setCurrentStep((value) => Math.min(value + 1, STEPS.PRICE));
     };
 
     const actionLabel = useMemo(() => {
@@ -76,7 +79,10 @@ const RentModal = () => {
         return "Back";
     }, [currentStep]);
 
-    let bodyContent = (
+    let bodyContent = <></>;
+
+    // Rent form body content for category step
+    const categoryStepContent = (
         <div className="flex flex-col gap-8">
             <Heading
                 title="Which of these best describes your property"
@@ -99,6 +105,33 @@ const RentModal = () => {
         </div>
     );
 
+    // Rent form body content for location step
+    const locationStepContent = (
+        <div className="flex flex-col gap-8">
+            <Heading
+                title="Where is your property located?"
+                subtitle="Help guests find your property"
+            />
+            <CountrySelect
+                value={selectedLocation}
+                onChange={(value) => setCustomValue("location", value)}
+            />
+        </div>
+    );
+
+    switch (currentStep) {
+        case STEPS.CATEGORY:
+            bodyContent = categoryStepContent;
+            break;
+
+        case STEPS.LOCATION:
+            bodyContent = locationStepContent;
+            break;
+
+        default:
+            break;
+    }
+
     return (
         <Modal
             isOpen={rentModal.isOpen}
@@ -110,7 +143,7 @@ const RentModal = () => {
             secondaryAction={
                 currentStep === STEPS.CATEGORY ? undefined : onBack
             }
-            onSubmit={rentModal.onClose}
+            onSubmit={onNext}
         />
     );
 };
