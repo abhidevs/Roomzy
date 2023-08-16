@@ -9,6 +9,7 @@ import Heading from "../Heading";
 import categories from "@/app/constants/categories";
 import CategoryInput from "../inputs/CategoryInput";
 import CountrySelect from "../inputs/CountrySelect";
+import dynamic from "next/dynamic";
 
 enum STEPS {
     CATEGORY = 0,
@@ -46,6 +47,15 @@ const RentModal = () => {
 
     const selectedCategory = watch("category");
     const selectedLocation = watch("location");
+
+    // Have to import and use the location map component this way, unless it not gonna work in nextjs
+    const LocationMap = useMemo(
+        () =>
+            dynamic(() => import("../LocationMap"), {
+                ssr: false,
+            }),
+        [selectedLocation]
+    );
 
     const setCustomValue = (id: string, value: any) => {
         setValue(id, value, {
@@ -116,6 +126,7 @@ const RentModal = () => {
                 value={selectedLocation}
                 onChange={(value) => setCustomValue("location", value)}
             />
+            <LocationMap center={selectedLocation?.latlng} />
         </div>
     );
 
