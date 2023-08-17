@@ -10,7 +10,8 @@ import categories from "@/app/constants/categories";
 import CategoryInput from "../inputs/CategoryInput";
 import CountrySelect from "../inputs/CountrySelect";
 import dynamic from "next/dynamic";
-import Counter from "../Counter";
+import Counter from "../inputs/Counter";
+import ImageUpload from "./ImageUpload";
 
 enum STEPS {
     CATEGORY = 0,
@@ -169,6 +170,18 @@ const RentModal = () => {
         </div>
     );
 
+    // Returns body content for images step
+    const getImagesStepContent = () => (
+        <div className="flex flex-col gap-8">
+            <Heading
+                title="Add some photos of your property"
+                subtitle="Show guests how your property looks like!"
+            />
+
+            <ImageUpload />
+        </div>
+    );
+
     switch (currentStep) {
         case STEPS.CATEGORY:
             bodyContent = getCategoryStepContent();
@@ -180,6 +193,10 @@ const RentModal = () => {
 
         case STEPS.INFO:
             bodyContent = getInfoStepContent();
+            break;
+
+        case STEPS.IMAGES:
+            bodyContent = getImagesStepContent();
             break;
 
         default:
