@@ -30,6 +30,7 @@ const LocationMap: React.FC<LocationMapProps> = ({ center }) => {
             className="h-[35vh] rounded-lg"
         >
             <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+            {center && <Marker position={center as leaflet.LatLngExpression} />}
         </MapContainer>
     );
 };
