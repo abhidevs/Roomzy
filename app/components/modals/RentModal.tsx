@@ -52,6 +52,7 @@ const RentModal = () => {
     const selectedGuestCount = watch("guestCount");
     const selectedRoomCount = watch("roomCount");
     const selectedBathroomCount = watch("bathroomCount");
+    const selectedImageSrc = watch("imageSrc");
 
     // Have to import and use the location map component this way, unless it not gonna work in nextjs
     const LocationMap = useMemo(
@@ -178,7 +179,10 @@ const RentModal = () => {
                 subtitle="Show guests how your property looks like!"
             />
 
-            <ImageUpload />
+            <ImageUpload
+                value={selectedImageSrc}
+                onChange={(value) => setCustomValue("imageSrc", value)}
+            />
         </div>
     );
 
