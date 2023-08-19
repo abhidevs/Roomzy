@@ -12,6 +12,7 @@ import CountrySelect from "../inputs/CountrySelect";
 import dynamic from "next/dynamic";
 import Counter from "../inputs/Counter";
 import ImageUpload from "./ImageUpload";
+import Input from "../inputs/Input";
 
 enum STEPS {
     CATEGORY = 0,
@@ -24,6 +25,8 @@ enum STEPS {
 
 const RentModal = () => {
     const [currentStep, setCurrentStep] = useState(STEPS.CATEGORY);
+    const [isLoading, setIsLoading] = useState(false);
+
     const rentModal = useRentModal();
 
     const {
@@ -186,6 +189,55 @@ const RentModal = () => {
         </div>
     );
 
+    // Returns body content for description step
+    const getDescriptionStepContent = () => (
+        <div className="flex flex-col gap-8">
+            <Heading
+                title="How would you describe your property?"
+                subtitle="Short and brief works best!"
+            />
+
+            <Input
+                id="title"
+                label="Title"
+                disabled={isLoading}
+                registerField={register}
+                errors={errors}
+                required
+            />
+            <hr />
+            <Input
+                id="description"
+                label="Description"
+                disabled={isLoading}
+                registerField={register}
+                errors={errors}
+                required
+            />
+        </div>
+    );
+
+    // Returns body content for price step
+    const getPriceStepContent = () => (
+        <div className="flex flex-col gap-8">
+            <Heading
+                title="Now, set your price"
+                subtitle="How much will it cost per night?"
+            />
+
+            <Input
+                id="price"
+                label="Price"
+                type="number"
+                disabled={isLoading}
+                registerField={register}
+                errors={errors}
+                formatPrice
+                required
+            />
+        </div>
+    );
+
     switch (currentStep) {
         case STEPS.CATEGORY:
             bodyContent = getCategoryStepContent();
@@ -203,7 +255,16 @@ const RentModal = () => {
             bodyContent = getImagesStepContent();
             break;
 
+        case STEPS.DESCRIPTION:
+            bodyContent = getDescriptionStepContent();
+            break;
+
+        case STEPS.PRICE:
+            bodyContent = getPriceStepContent();
+            break;
+
         default:
+            bodyContent = getCategoryStepContent();
             break;
     }
 
