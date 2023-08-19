@@ -1,7 +1,11 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { FieldValues, useForm } from "react-hook-form";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
+import { toast } from "react-hot-toast";
+import dynamic from "next/dynamic";
+import axios from "axios";
 
 import Modal from "./Modal";
 import useRentModal from "@/app/hooks/useRentModal";
@@ -9,7 +13,6 @@ import Heading from "../Heading";
 import categories from "@/app/constants/categories";
 import CategoryInput from "../inputs/CategoryInput";
 import CountrySelect from "../inputs/CountrySelect";
-import dynamic from "next/dynamic";
 import Counter from "../inputs/Counter";
 import ImageUpload from "./ImageUpload";
 import Input from "../inputs/Input";
@@ -28,6 +31,7 @@ const RentModal = () => {
     const [isLoading, setIsLoading] = useState(false);
 
     const rentModal = useRentModal();
+    const router = useRouter();
 
     const {
         register,
@@ -80,6 +84,29 @@ const RentModal = () => {
 
     const onNext = () => {
         setCurrentStep((value) => Math.min(value + 1, STEPS.PRICE));
+    };
+
+    const onSubmit: SubmitHandler<FieldValues> = (data) => {
+        if (currentStep !== STEPS.PRICE) {
+            return onNext();
+        }
+
+        setIsLoading(true);
+        axios
+            .post("/api/listings", data)
+            .then(() => {
+                toast.success("Listing created successfully!");
+                router.refresh();
+                reset();
+                setCurrentStep(STEPS.CATEGORY);
+                rentModal.onClose();
+            })
+            .catch((err) => {
+                toast.error(err.message || "Something went wrong!");
+            })
+            .finally(() => {
+                setIsLoading(false);
+            });
     };
 
     const actionLabel = useMemo(() => {
@@ -279,7 +306,7 @@ const RentModal = () => {
             secondaryAction={
                 currentStep === STEPS.CATEGORY ? undefined : onBack
             }
-            onSubmit={onNext}
+            onSubmit={handleSubmit(onSubmit)}
         />
     );
 };
