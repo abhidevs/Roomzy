@@ -16,7 +16,7 @@ interface ListingCardProps {
     disabled?: boolean;
     actionLabel?: string;
     actionId?: string;
-    onAction: (id: string) => void;
+    onAction?: (id: string) => void;
     currentUser?: User | null;
 }
 
@@ -99,7 +99,12 @@ const ListingCard: React.FC<ListingCardProps> = ({
                 </div>
 
                 {actionLabel && onAction && (
-                    <Button label={actionLabel} disabled={disabled} small onClick={handleCancel} />
+                    <Button
+                        label={actionLabel}
+                        disabled={disabled}
+                        small
+                        onClick={handleCancel}
+                    />
                 )}
             </div>
         </div>
