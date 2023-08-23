@@ -1,5 +1,7 @@
+import getCurrentUser from "@/app/actions/getCurrentUser";
 import getListingById from "@/app/actions/getListingById";
 import NotFound from "@/app/components/NotFound";
+import DetailedListingPage from "./DetailedListingPage";
 
 interface IParams {
     listingId?: string;
@@ -7,6 +9,7 @@ interface IParams {
 
 const ListingPage = async ({ params }: { params: IParams }) => {
     let listing;
+    const currentUser = await getCurrentUser();
 
     try {
         listing = await getListingById(params);
@@ -18,7 +21,7 @@ const ListingPage = async ({ params }: { params: IParams }) => {
         return <NotFound showGoToHome />;
     }
 
-    return <div>{listing.title}</div>;
+    return <DetailedListingPage listing={listing} currentUser={currentUser} />;
 };
 
 export default ListingPage;
