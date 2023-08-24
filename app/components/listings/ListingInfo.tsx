@@ -1,10 +1,12 @@
 "use client";
 
-import useCountries from "@/app/hooks/useCountries";
-import { User } from "@prisma/client";
 import { IconType } from "react-icons";
+import dynamic from "next/dynamic";
+
+import { User } from "@prisma/client";
 import Avatar from "../Avatar";
 import ListingCategory from "./ListingCategory";
+import useCountries from "@/app/hooks/useCountries";
 
 interface ListingInfoProps {
     createdBy: User | null;
@@ -19,6 +21,10 @@ interface ListingInfoProps {
         description: string;
     };
 }
+
+const Map = dynamic(() => import("../LocationMap"), {
+    ssr: false,
+});
 
 const ListingInfo: React.FC<ListingInfoProps> = ({
     createdBy,
@@ -48,6 +54,7 @@ const ListingInfo: React.FC<ListingInfoProps> = ({
                 </div>
             </div>
             <hr />
+
             {category && (
                 <ListingCategory
                     icon={category.icon}
@@ -55,6 +62,14 @@ const ListingInfo: React.FC<ListingInfoProps> = ({
                     description={category.description}
                 />
             )}
+            <hr />
+
+            <div className="text-lg font-light text-neutral-500">
+                {description}
+            </div>
+            <hr />
+
+            <Map center={locationCoordinates} />
         </div>
     );
 };
