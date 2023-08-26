@@ -48,7 +48,6 @@ const RegisterModal = () => {
             })
             .catch((error) => {
                 toast.error(error.message || "Something went wrong");
-                console.log(error);
             })
             .finally(() => {
                 setIsLoading(false);
