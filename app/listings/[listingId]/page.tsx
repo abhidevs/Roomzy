@@ -2,6 +2,7 @@ import getCurrentUser from "@/app/actions/getCurrentUser";
 import getListingById from "@/app/actions/getListingById";
 import NotFound from "@/app/components/NotFound";
 import DetailedListingPage from "./DetailedListingPage";
+import getReservations from "@/app/actions/getReservations";
 
 interface IParams {
     listingId?: string;
@@ -21,7 +22,15 @@ const ListingPage = async ({ params }: { params: IParams }) => {
         return <NotFound showGoToHome />;
     }
 
-    return <DetailedListingPage listing={listing} currentUser={currentUser} />;
+    const reservations = await getReservations(params);
+
+    return (
+        <DetailedListingPage
+            listing={listing}
+            currentUser={currentUser}
+            reservations={reservations}
+        />
+    );
 };
 
 export default ListingPage;
