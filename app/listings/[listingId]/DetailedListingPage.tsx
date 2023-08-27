@@ -83,7 +83,15 @@ const DetailedListingPage: React.FC<DetailedListingPageProps> = ({
             .finally(() => {
                 setIsLoading(false);
             });
-    }, [currentUser, reservations, listing, router, dateRange, loginModal]);
+    }, [
+        currentUser,
+        reservations,
+        listing,
+        router,
+        dateRange,
+        loginModal,
+        totalPrice,
+    ]);
 
     useEffect(() => {
         if (dateRange.startDate && dateRange.endDate) {
