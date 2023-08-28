@@ -73,9 +73,7 @@ const DetailedListingPage: React.FC<DetailedListingPageProps> = ({
             .then((res) => {
                 toast.success("Reservation added successfully");
                 setDateRange(initialDateRange);
-
-                // Redirect to "/trips"
-                router.refresh();
+                router.push("/trips");
             })
             .catch((err) => {
                 toast.error(err.message || "Something went wrong.");
