@@ -12,7 +12,7 @@ import getCurrentUser from "./actions/getCurrentUser";
 const nunito = Nunito({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-    title: "Airbnb",
+    title: "Roomzy",
     description: "Book hotels and villas with no extra charge",
 };
 
