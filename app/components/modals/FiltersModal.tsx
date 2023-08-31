@@ -63,7 +63,7 @@ const FiltersModal = () => {
 
         const updatedQuery: any = {
             ...currentQuery,
-            location,
+            location: location?.value,
             guestCount,
             roomCount,
             bathroomCount,
@@ -92,6 +92,7 @@ const FiltersModal = () => {
         currentStep,
         filtersModal,
         location,
+        router,
         guestCount,
         roomCount,
         bathroomCount,
