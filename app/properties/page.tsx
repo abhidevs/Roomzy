@@ -10,7 +10,8 @@ const PropertiesPage = async () => {
         return (
             <EmptyState
                 title="Not authorized"
-                subtitle="Please login top your account!"
+                subtitle="Please login to your account!"
+                showLogin
             />
         );
     }

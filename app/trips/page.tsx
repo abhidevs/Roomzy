@@ -14,7 +14,8 @@ const TripsPage = async ({ params }: { params: IParams }) => {
         return (
             <EmptyState
                 title="Not authorized"
-                subtitle="Please login top your account!"
+                subtitle="Please login to your account!"
+                showLogin
             />
         );
     }
