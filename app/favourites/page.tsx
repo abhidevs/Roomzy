@@ -8,14 +8,14 @@ interface IParams {
     listingId?: string;
 }
 
-const TripsPage = async ({ params }: { params: IParams }) => {
+const FavouritesPage = async ({ params }: { params: IParams }) => {
     const currentUser = await getCurrentUser();
 
     if (!currentUser) {
         return (
             <EmptyState
                 title="Not authorized"
-                subtitle="Please login to your account!"
+                subtitle="Please login to your account to see your favourites!"
                 showLogin
             />
         );
@@ -37,4 +37,4 @@ const TripsPage = async ({ params }: { params: IParams }) => {
     );
 };
 
-export default TripsPage;
+export default FavouritesPage;

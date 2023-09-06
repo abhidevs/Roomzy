@@ -10,7 +10,7 @@ const ReservationsPage = async () => {
         return (
             <EmptyState
                 title="Not authorized"
-                subtitle="Please login to your account to view reservations"
+                subtitle="Please login to your account to see your reservations"
             />
         );
     }
