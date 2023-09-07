@@ -64,7 +64,7 @@ const Filtersbar = () => {
                 </div>
                 <div className="text-sm pl-6 pr-1 md:pr-2 text-gray-600 flex flex-row items-center gap-3">
                     <div className="hidden sm:block">{guestsLabel}</div>
-                    <div className="p-2 bg-rose-500 rounded-full text-white">
+                    <div className="p-2 bg-sky-500 rounded-full text-white">
                         <RiFilter3Line size={18} />
                     </div>
                 </div>

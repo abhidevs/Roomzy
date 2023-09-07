@@ -28,6 +28,7 @@ const EmptyState: React.FC<EmptyStateProps> = ({
                 {showReset && (
                     <Button
                         outline
+                        colouredOutline
                         label="Remove all filters"
                         onClick={() => router.push("/")}
                     />
@@ -37,6 +38,7 @@ const EmptyState: React.FC<EmptyStateProps> = ({
                 {showLogin && (
                     <Button
                         outline
+                        colouredOutline
                         label="Login"
                         onClick={() => loginModal.onOpen()}
                     />

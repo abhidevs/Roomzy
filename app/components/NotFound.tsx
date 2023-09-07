@@ -24,6 +24,7 @@ const NotFound: React.FC<NotFoundProps> = ({
                 {showGoToHome && (
                     <Button
                         outline
+                        colouredOutline
                         label="Go to Homepage"
                         onClick={() => router.push("/")}
                     />
