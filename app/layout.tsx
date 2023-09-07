@@ -33,7 +33,7 @@ export default async function RootLayout({
                 <RentModal />
                 <FiltersModal />
                 <ToasterProvider />
-                <div className="pt-28 pb-20">{children}</div>
+                <div className="pt-20 md:pt-28 pb-20">{children}</div>
             </body>
         </html>
     );
