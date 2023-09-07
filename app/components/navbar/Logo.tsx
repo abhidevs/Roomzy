@@ -10,7 +10,7 @@ const Logo = () => {
         <Image
             onClick={() => router.push("/")}
             alt="Roomzy"
-            className="hidden md:block cursor-pointer"
+            className="w-16 md:w-20 cursor-pointer"
             height="100"
             width="100"
             src="/images/roomzy_logo.webp"
